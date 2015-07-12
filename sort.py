@@ -4,7 +4,7 @@ __author__ = 'sarif'
 
 # list = [20, 12, 10, 7, 4]
 # list = [2, 4, 10, 17, 20]
-list = range(0, 1000)
+list = range(0, 10000)
 # list.reverse()
 random.shuffle(list)
 
@@ -66,37 +66,87 @@ def selectSort(list):
     print("comparison: {0}".format(comparison))
 
 
+# xrange bistree chem range, v inete vse pishut
 def insertSort(list):
     comparison = 0
     swaps = 0
-    #print(list)
+    # print(list)
     for i in range(0, len(list)):
         x = list[i]
         k = i
-        for j in xrange(i-1, -1, -1):  # i-1 doljno bit >=0
+        for j in xrange(i - 1, -1, -1):  # i-1 doljno bit >=0
             comparison += 1
             if x < list[j]:
                 swaps += 1
                 list[j + 1] = list[j]
                 k = j
-                #print(list)
+                # print(list)
             else:
                 break
         list[k] = x
         swaps += 1
-        #print(list)
-        #print
-    #print(list)
+        # print(list)
+        # print
+    # print(list)
     print
     print("insertSort")
     print("swaps: {0}".format(swaps))
     print("comparison: {0}".format(comparison))
 
 
+def ShellSort(list):
+    comparison = 0
+    swaps = 0
+    steps = []
+    size = len(list)
+    i = 0
+    while True:
+        iteration = shellIteration(i)
+        if 3 * iteration > size:
+            break
+        else:
+            steps.append(iteration)
+        i += 1
+    steps.reverse()
+
+    for step in steps:
+        for groupNumber in range(0, step):
+            for groupI in xrange(groupNumber, size, step):
+                x = list[groupI]
+                k = groupI
+                for groupJ in xrange(groupI - step, groupNumber-1, -step):
+                    comparison +=1
+                    if x < list[groupJ]:
+                        swaps += 1
+                        list[groupJ + step] = list[groupJ]
+                        k = groupJ
+                    else:
+                        break
+                list[k] = x
+                swaps += 1
+    print
+    print("ShelltSort")
+    print("swaps: {0}".format(swaps))
+    print("comparison: {0}".format(comparison))
+
+
+
+
+def shellIteration(s):
+    if s % 2 == 0:
+        return 9 * 2 ** s - 9 * 2 ** (s / 2) + 1
+    else:
+        return 8 * 2 ** s - 6 * 2 ** ((s + 1) / 2) + 1
+
+
+
 
 list1 = list[:]
 list2 = list[:]
 list3 = list[:]
+list4 = list[:]
 selectSort(list1)
 bubbleSort(list2)
 insertSort(list3)
+ShellSort(list4)
+
