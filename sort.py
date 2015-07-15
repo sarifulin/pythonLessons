@@ -4,7 +4,7 @@ __author__ = 'sarif'
 
 # list = [20, 12, 10, 7, 4]
 # list = [2, 4, 10, 17, 20]
-list = range(0, 10000)
+list = range(0, 10)
 # list.reverse()
 random.shuffle(list)
 
@@ -139,14 +139,51 @@ def shellIteration(s):
         return 8 * 2 ** s - 6 * 2 ** ((s + 1) / 2) + 1
 
 
+def pushDown(list, i):
+    size = len(list)
+    childIndex = 2*i+1
+    if childIndex > size:
+        return
+    if (2*i+2) < size and list[2*i+2]> list[childIndex]:
+        childIndex = 2*i+2
+    if list[i] < list[childIndex]:
+        parentSave = list[i]
+        list[i] = list[childIndex]
+        list[childIndex] = parentSave
+        pushDown(list, childIndex)
+        print("pushDown list = ", list)
 
 
-list1 = list[:]
-list2 = list[:]
-list3 = list[:]
-list4 = list[:]
-selectSort(list1)
-bubbleSort(list2)
-insertSort(list3)
-ShellSort(list4)
+def pyramidSort(list):
+    comparison = 0
+    swaps = 0
+    size = len(list)
+    print("original:", list)
+    for i in range((size // 2) - 1, -1, -1):
+       pushDown(list, i)
+    print("our pyramid:", list)
+    for j in range(size-1, -1, -1):
+        print("j=", j)
+        k = list[0]
+        print("first:", k)
+        print("last:", list[j])
+        list[0] = list[j]
+        list[j] = k
+        print("without root:", list)
+        pushDown(list, j)
+        print("final result:", list)
+
+
+
+
+
+
+
+
+pyramidSort([1, 8, 2, 7, 4, 5, 0, 3, 9, 6])
+# pyramidSort(list[:])
+# selectSort(list[:])
+# bubbleSort(list[:])
+# insertSort(list[:])
+# ShellSort(list[:])
 
